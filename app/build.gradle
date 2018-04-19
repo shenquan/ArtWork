@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.antfortune.freeline'
 
 def buildTime() {
-    return new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+08"))
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("GMT+08"))
 }
 
 android {
@@ -43,9 +43,9 @@ android {
         variant.outputs.each { output ->
             def file = output.outputFile
             if (variant.buildType.name == "release") {
-                output.outputFile = new File(file.parent, file.name.replace(".apk", "ArtWork_v${defaultConfig.versionName}_${buildTime()}_release.apk"))
+                output.outputFile = new File(file.parent, file.name.replace(".apk", "ArtWork_v${defaultConfig.versionName}_${buildTime()}.apk"))
             } else if (variant.buildType.name == "debug") {
-                output.outputFile = new File(file.parent, file.name.replace(".apk", "ArtWork_v${defaultConfig.versionName}_${buildTime()}_debug.apk"))
+                output.outputFile = new File(file.parent, file.name.replace(".apk", "ArtWork_v${defaultConfig.versionName}_${buildTime()}.apk"))
             }
         }
     }
