@@ -2,11 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.antfortune.freeline'
 
 def buildTime() {
-    return new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+08"))
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 25
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.example.sqhan.artwork"
         minSdkVersion 19
@@ -21,12 +22,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def outputFile = output.outputFile
+//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                File outputDirectory = new File(outputPathName)
+//                def fileName
+//                if (variant.buildType.name == "release") {
+//                    fileName = "ArtWork_v${defaultConfig.versionName}_${releaseTime()}_release.apk"
+//                    output.outputFile = new File(outputDirectory, fileName)
+//                } else if (variant.buildType.name == "debug") {
+//                    fileName = "ArtWork_v${defaultConfig.versionName}_${releaseTime()}_debug.apk"
+//                    output.outputFile = new File(outputDirectory, fileName)
+//                }
+//            }
+//        }
+//    }
+
     applicationVariants.all { variant ->
-        variant.outputs.all { output ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
             if (variant.buildType.name == "release") {
-                outputFileName = "ArtWork_v${defaultConfig.versionName}_${buildTime()}_release.apk"
+                output.outputFile = new File(file.parent, file.name.replace(".apk", "ArtWork_v${defaultConfig.versionName}_${buildTime()}_release.apk"))
             } else if (variant.buildType.name == "debug") {
-                outputFileName = "ArtWork_v${defaultConfig.versionName}_${buildTime()}_debug.apk"
+                output.outputFile = new File(file.parent, file.name.replace(".apk", "ArtWork_v${defaultConfig.versionName}_${buildTime()}_debug.apk"))
             }
         }
     }
@@ -34,12 +53,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'junit:junit:4.12'
+    compile 'org.greenrobot:eventbus:3.1.1'
 
 }
