@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.antfortune.freeline'
 
+def outputPathName = "${rootDir}/apk"
+
 def buildTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("GMT+08"))
 }
@@ -22,24 +24,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def outputFile = output.outputFile
-//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                File outputDirectory = new File(outputPathName)
-//                def fileName
-//                if (variant.buildType.name == "release") {
-//                    fileName = "ArtWork_v${defaultConfig.versionName}_${releaseTime()}_release.apk"
-//                    output.outputFile = new File(outputDirectory, fileName)
-//                } else if (variant.buildType.name == "debug") {
-//                    fileName = "ArtWork_v${defaultConfig.versionName}_${releaseTime()}_debug.apk"
-//                    output.outputFile = new File(outputDirectory, fileName)
-//                }
-//            }
-//        }
-//    }
-
     applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                File outputDirectory = new File(outputPathName)
+                def fileName
+                if (variant.buildType.name == "release") {
+                    fileName = "ArtWork_v${defaultConfig.versionName}_${buildTime()}_release.apk"
+                    output.outputFile = new File(outputDirectory, fileName)
+                } else if (variant.buildType.name == "debug") {
+                    fileName = "ArtWork_v${defaultConfig.versionName}_${buildTime()}_debug.apk"
+                    output.outputFile = new File(outputDirectory, fileName)
+                }
+            }
+        }
+    }
+
+    //不使用这个，mcd vbk会失败
+    /*applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def file = output.outputFile
             if (variant.buildType.name == "release") {
@@ -48,7 +51,7 @@ android {
                 output.outputFile = new File(file.parent, file.name.replace(".apk", "ArtWork_v${defaultConfig.versionName}_${buildTime()}.apk"))
             }
         }
-    }
+    }*/
 
 }
 
