@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DetailPopupWindow">
+        <!--进入-->
+        <item name="android:windowEnterAnimation">@anim/detail_popup_fade_in</item>
+        <!--退出-->
+        <item name="android:windowExitAnimation">@anim/detail_popup_fade_out</item>
+    </style>
+
 </resources>

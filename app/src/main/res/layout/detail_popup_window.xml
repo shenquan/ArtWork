@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingTop="14dp">
+        <!--头部标题与取消按钮-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/detail_popup_header_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="头部标题"
+                android:textColor="#FF333333"
+                android:textSize="15.33dp" />
+
+            <TextView
+                android:id="@+id/detail_popup_disappear_tv"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="可点击的X"
+                android:textColor="#FFCCCCCC"
+                android:textSize="13.44dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
