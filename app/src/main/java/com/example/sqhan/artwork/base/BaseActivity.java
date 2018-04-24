@@ -24,6 +24,7 @@ public class BaseActivity extends FragmentActivity {
         mContext = this;
         mTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/my_iconfont.ttf");
         initView();
+        initEvents();
 
         //调试环境显示调试按钮
         if (AndroidUtil.isDebugEnv(mContext)) {
@@ -38,7 +39,17 @@ public class BaseActivity extends FragmentActivity {
 
     }
 
+    /**
+     * 初始化view
+     */
     protected void initView() {
+
+    }
+
+    /**
+     * 初始化注册事件
+     */
+    protected void initEvents() {
 
     }
 
