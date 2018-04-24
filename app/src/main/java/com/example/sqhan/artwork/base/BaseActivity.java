@@ -16,7 +16,7 @@ import com.example.sqhan.artwork.utils.AndroidUtil;
 
 public class BaseActivity extends FragmentActivity {
     protected Context mContext;
-    private Typeface mTypeface;
+    protected Typeface mTypeface;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
