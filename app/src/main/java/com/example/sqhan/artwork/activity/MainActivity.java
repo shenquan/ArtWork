@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         super.onCreate(savedInstanceState);
         new MainPresenter(this);
         EventBus.getDefault().register(this);
+
     }
 
     @Override
