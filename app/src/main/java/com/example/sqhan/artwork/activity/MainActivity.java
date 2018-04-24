@@ -60,9 +60,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
     @Override
     public void openPageUI() {
-        EventBus.getDefault().postSticky(new ChangeSecondActivityTextEvent("页面接收到eventBus消息"));
         Intent intent = new Intent(mContext, SecondActivity.class);
         startActivity(intent);
+        EventBus.getDefault().postSticky(new ChangeSecondActivityTextEvent("页面接收到eventBus消息"));
     }
 
     @Override
@@ -83,6 +83,17 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     public void onEvent(ChangeMainActivityTextEvent event) {
         tv_1.setText(event.text);
         AndroidUtil.showOneToast(mContext, event.text);
+    }
+
+    /**
+     * 即使是两个相同的事件，也都会执行
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent11(ChangeMainActivityTextEvent event) {
+        tv_1.setText(event.text);
+        AndroidUtil.showOneToast(mContext, "111");
     }
 
     @Override
