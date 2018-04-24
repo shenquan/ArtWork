@@ -1,4 +1,4 @@
-package com.example.sqhan.artwork;
+package com.example.sqhan.artwork.base;
 
 import android.app.Application;
 
@@ -9,7 +9,7 @@ import com.tencent.bugly.Bugly;
  * Created by sqhan on 2018/4/23.
  */
 
-public class MyApplication extends Application {
+public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
