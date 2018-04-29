@@ -28,6 +28,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+        <service android:name=".service.SimpleService" />
+        <service android:name=".service.LocalService" />
+        <service android:name=".service.ForegroundService" />
+
     </application>
 
 </manifest>
