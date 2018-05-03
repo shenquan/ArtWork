@@ -38,16 +38,6 @@ public class BindActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
-        setContentView(R.layout.bind_service_layout);
-
-        btnBind = (Button) findViewById(R.id.BindService);
-        btnUnBind = (Button) findViewById(R.id.unBindService);
-        btnGetDatas = (Button) findViewById(R.id.getServiceDatas);
         //创建绑定对象
         intent = new Intent(this, LocalService.class);
         conn = new ServiceConnection() {
@@ -76,6 +66,17 @@ public class BindActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void initView() {
+        super.initView();
+        setContentView(R.layout.bind_service_layout);
+
+        btnBind = (Button) findViewById(R.id.BindService);
+        btnUnBind = (Button) findViewById(R.id.unBindService);
+        btnGetDatas = (Button) findViewById(R.id.getServiceDatas);
+
+    }
+
+    @Override
     protected void initEvents() {
         super.initEvents();
         btnBind.setOnClickListener(this);
@@ -85,18 +86,19 @@ public class BindActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.BindService) {
+        int id = v.getId();
+        if (id == R.id.BindService) {
             Log.e(TAG, "绑定调用：bindService");
             //调用绑定方法
             bindService(intent, conn, Service.BIND_AUTO_CREATE);
-        } else if (v.getId() == R.id.unBindService) {
+        } else if (id == R.id.unBindService) {
             Log.e(TAG, "解除绑定调用：unbindService");
             // 解除绑定
             if (mService != null) {
                 mService = null;
                 unbindService(conn);
             }
-        } else if (v.getId() == R.id.getServiceDatas) {
+        } else if (id == R.id.getServiceDatas) {
             if (mService != null) {
                 // 通过绑定服务传递的Binder对象，获取Service暴露出来的数据
 

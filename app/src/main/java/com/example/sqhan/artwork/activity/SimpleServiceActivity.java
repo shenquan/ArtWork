@@ -18,11 +18,12 @@ public class SimpleServiceActivity extends BaseActivity implements View.OnClickL
 
     private Button startService;
     private Button stopService;
+    private Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        intent = new Intent(mContext, SimpleService.class);
     }
 
     @Override
@@ -43,10 +44,10 @@ public class SimpleServiceActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(mContext, SimpleService.class);
-        if (v.getId() == R.id.startService) {
+        int id = v.getId();
+        if (id == R.id.startService) {
             startService(intent);
-        } else if (v.getId() == R.id.stopService) {
+        } else if (id == R.id.stopService) {
             stopService(intent);
         }
     }

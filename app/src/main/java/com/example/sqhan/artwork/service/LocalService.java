@@ -28,12 +28,6 @@ public class LocalService extends Service {
         }
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return binder;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -53,6 +47,12 @@ public class LocalService extends Service {
             }
         });
         thread.start();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binder;
     }
 
     /**
@@ -81,4 +81,6 @@ public class LocalService extends Service {
         this.quit = true;
         super.onDestroy();
     }
+
+
 }

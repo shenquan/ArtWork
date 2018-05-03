@@ -45,7 +45,8 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tv_2) {
+        int id = v.getId();
+        if (id == R.id.tv_2) {
             EventBus.getDefault().post(new ChangeMainActivityTextEvent("发送事件成功"));
         }
     }

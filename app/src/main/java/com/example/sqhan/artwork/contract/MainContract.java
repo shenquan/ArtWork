@@ -16,6 +16,8 @@ public interface MainContract {
         void openSimpleServicePage();//打开简单服务页面
 
         void openBindServicePage();//打开绑定服务页面
+
+        void openForegroundServicePage();//打开前台服务页面
     }
 
     interface View extends BaseView<Presenter> {
@@ -27,6 +29,8 @@ public interface MainContract {
         void openSimpleServicePageUI();
 
         void openBindServicePageUI();
+
+        void openForegroundServicePageUI();
 
     }
 

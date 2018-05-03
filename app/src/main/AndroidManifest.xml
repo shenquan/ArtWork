@@ -35,6 +35,15 @@
             android:name=".activity.BindActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForegroundActivity"
+            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.NotificationOpenActivity"
+            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
         <service android:name=".service.SimpleService" />
         <service android:name=".service.LocalService" />

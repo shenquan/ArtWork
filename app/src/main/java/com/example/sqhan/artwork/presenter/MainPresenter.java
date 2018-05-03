@@ -37,4 +37,9 @@ public class MainPresenter implements MainContract.Presenter {
     public void openBindServicePage() {
         mView.openBindServicePageUI();
     }
+
+    @Override
+    public void openForegroundServicePage() {
+        mView.openForegroundServicePageUI();
+    }
 }

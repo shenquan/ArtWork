@@ -35,5 +35,13 @@
         android:text="打开BindServiceActivity页面"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="打开ForegroundServiceActivity页面"
+        android:textAllCaps="false" />
+
 
 </LinearLayout>
