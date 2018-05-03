@@ -27,4 +27,9 @@ public class MainPresenter implements MainContract.Presenter {
     public void openPage() {
         mView.openPageUI();
     }
+
+    @Override
+    public void openSimpleServicePage() {
+        mView.openSimpleServicePageUI();
+    }
 }

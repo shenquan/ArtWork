@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.ThreadMode;
 public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
     private TextView tv_1;
     private Button btn_1;
+    private Button btn_2;
     private MainContract.Presenter mPresenter;
 
     @Override
@@ -35,10 +36,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     @Override
     protected void initView() {
         super.initView();
+        //在这里setContentView
         setContentView(R.layout.activity_main);
 
         tv_1 = (TextView) findViewById(R.id.tv_1);
         btn_1 = (Button) findViewById(R.id.btn_1);
+        btn_2 = (Button) findViewById(R.id.btn_2);
 
     }
 
@@ -47,6 +50,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         super.initEvents();
         tv_1.setOnClickListener(this);
         btn_1.setOnClickListener(this);
+        btn_2.setOnClickListener(this);
     }
 
     @Override
@@ -72,11 +76,19 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     }
 
     @Override
+    public void openSimpleServicePageUI() {
+        Intent intent = new Intent(mContext,SimpleServiceActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_1) {
             mPresenter.openPage();
         } else if (v.getId() == R.id.tv_1) {
             mPresenter.changeText();
+        } else if (v.getId() == R.id.btn_2) {
+            mPresenter.openSimpleServicePage();
         }
     }
 

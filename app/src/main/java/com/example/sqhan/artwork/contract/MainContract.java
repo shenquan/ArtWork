@@ -11,7 +11,9 @@ public interface MainContract {
     interface Presenter extends BasePresenter {
         void changeText();//点击文字
 
-        void openPage();//打开新页面
+        void openPage();//打开第二个页面
+
+        void openSimpleServicePage();//打开第二个页面
     }
 
     interface View extends BaseView<Presenter> {
@@ -19,6 +21,8 @@ public interface MainContract {
         void changeTextUI(String str);
 
         void openPageUI();
+
+        void openSimpleServicePageUI();
 
     }
 

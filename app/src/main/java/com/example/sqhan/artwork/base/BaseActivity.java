@@ -23,8 +23,9 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         mTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/my_iconfont.ttf");
-        initView();
-        initEvents();
+
+        initView();//子类需要重写
+        initEvents();//子类需要重写
 
         //调试环境显示调试按钮
         if (AndroidUtil.isDebugEnv(mContext)) {

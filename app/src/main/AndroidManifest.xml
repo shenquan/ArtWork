@@ -27,6 +27,11 @@
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SimpleServiceActivity"
+            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <service android:name=".service.SimpleService" />
         <service android:name=".service.LocalService" />
