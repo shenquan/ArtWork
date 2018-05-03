@@ -4,14 +4,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-
-import com.facebook.stetho.common.LogUtil;
+import android.util.Log;
 
 /**
  * 直接启动service
  */
 public class SimpleService extends Service {
-    public static final String TAG = "hsq:";
+    public static final String TAG = "hsq";
 
     /**
      * 绑定服务时才会调用
@@ -33,7 +32,7 @@ public class SimpleService extends Service {
     @Override
     public void onCreate() {
         System.out.println("onCreate invoke");
-        LogUtil.e(TAG + "onCreate invoke");
+        Log.e(TAG, "onCreate invoke");
         super.onCreate();
     }
 
@@ -48,7 +47,7 @@ public class SimpleService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("onStartCommand invoke");
-        LogUtil.e(TAG + "onStartCommand invoke");
+        Log.e(TAG, "onStartCommand invoke");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -58,7 +57,7 @@ public class SimpleService extends Service {
     @Override
     public void onDestroy() {
         System.out.println("onDestroy invoke");
-        LogUtil.e(TAG + "onDestroy invoke");
+        Log.e(TAG, "onDestroy invoke");
         super.onDestroy();
     }
 

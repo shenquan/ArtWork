@@ -23,6 +23,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     private TextView tv_1;
     private Button btn_1;
     private Button btn_2;
+    private Button btn_3;
     private MainContract.Presenter mPresenter;
 
     @Override
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         tv_1 = (TextView) findViewById(R.id.tv_1);
         btn_1 = (Button) findViewById(R.id.btn_1);
         btn_2 = (Button) findViewById(R.id.btn_2);
+        btn_3 = (Button) findViewById(R.id.btn_3);
 
     }
 
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         tv_1.setOnClickListener(this);
         btn_1.setOnClickListener(this);
         btn_2.setOnClickListener(this);
+        btn_3.setOnClickListener(this);
     }
 
     @Override
@@ -77,7 +80,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
     @Override
     public void openSimpleServicePageUI() {
-        Intent intent = new Intent(mContext,SimpleServiceActivity.class);
+        Intent intent = new Intent(mContext, SimpleServiceActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void openBindServicePageUI() {
+        Intent intent = new Intent(mContext, BindActivity.class);
         startActivity(intent);
     }
 
@@ -87,8 +96,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
             mPresenter.openPage();
         } else if (v.getId() == R.id.tv_1) {
             mPresenter.changeText();
-        } else if (v.getId() == R.id.btn_2) {
+        } else if (v.getId() == R.id.btn_2) {//打开简单启动服务页面
             mPresenter.openSimpleServicePage();
+        } else if (v.getId() == R.id.btn_3) {//打开绑定服务页面
+            mPresenter.openBindServicePage();
         }
     }
 

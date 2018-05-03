@@ -23,7 +23,7 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         mTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/my_iconfont.ttf");
-
+        //注意顺序
         initView();//子类需要重写
         initEvents();//子类需要重写
 

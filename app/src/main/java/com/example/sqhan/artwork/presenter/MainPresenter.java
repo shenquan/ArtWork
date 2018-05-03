@@ -32,4 +32,9 @@ public class MainPresenter implements MainContract.Presenter {
     public void openSimpleServicePage() {
         mView.openSimpleServicePageUI();
     }
+
+    @Override
+    public void openBindServicePage() {
+        mView.openBindServicePageUI();
+    }
 }
