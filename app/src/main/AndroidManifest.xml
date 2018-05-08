@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sqhan.artwork">
+    <!-- Permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 使用网络 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 读取手机状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 检测Wifi状态 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- GPS定位技术 -->
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <!-- 网络定位技术 -->
+    <uses-permission android:name="android.permission.ACCESS_ASSISTED_GPS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 改变WIFI状态 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 写入内存卡 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- 添加快捷方式 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 使设备震动 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 可调用getRunningTasks -->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!-- 允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".base.BaseApplication"
@@ -44,6 +83,9 @@
             android:name=".activity.NotificationOpenActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeakCanaryActivity"
+             />
 
         <service android:name=".service.SimpleService" />
         <service android:name=".service.LocalService" />

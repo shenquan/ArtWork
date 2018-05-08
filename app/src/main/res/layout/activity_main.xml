@@ -43,5 +43,13 @@
         android:text="打开ForegroundServiceActivity页面"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/openLeakCanaryActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="打开LeakCanaryActivity页面"
+        android:textAllCaps="false" />
+
 
 </LinearLayout>
