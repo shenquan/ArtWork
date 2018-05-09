@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.sqhan.artwork.R;
 import com.example.sqhan.artwork.base.BaseActivity;
 import com.example.sqhan.artwork.contract.MainContract;
+import com.example.sqhan.artwork.di.component.DaggerMainActivityComponent;
+import com.example.sqhan.artwork.di.module.MainModule;
 import com.example.sqhan.artwork.model.events.ChangeMainActivityTextEvent;
 import com.example.sqhan.artwork.model.events.ChangeSecondActivityTextEvent;
 import com.example.sqhan.artwork.presenter.MainPresenter;
@@ -26,6 +28,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by sqhan on 2018/5/1
  * <p>
@@ -34,7 +38,9 @@ import java.util.List;
  */
 
 public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
-    private MainContract.Presenter mPresenter;
+    @Inject
+    MainPresenter mPresenter;
+
     private TextView tv_1;
     private Button btn_1;
     private Button btn_2;
@@ -48,6 +54,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         new MainPresenter(this);
         EventBus.getDefault().register(this);
         getPrim();
+
+        DaggerMainActivityComponent.builder().mainModule(new MainModule(this)).build().inject(this);
+
 
     }
 
@@ -76,11 +85,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         btn_4.setOnClickListener(this);
         openLeakCanaryActivity.setOnClickListener(this);
     }
-
-    @Override
+    //改为使用dagger2注入
+    /*@Override
     public void setPresenter(MainContract.Presenter presenter) {
         mPresenter = presenter;
-    }
+    }*/
 
     @Override
     public Context getContext() {

@@ -22,12 +22,16 @@ import org.greenrobot.eventbus.ThreadMode;
 import javax.inject.Inject;
 
 /**
- * Created by sqhan on 2018/4/23.
+ * Created by sqhan on 2018/4/23
+ * <p>
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
  */
 
 public class SecondActivity extends BaseActivity implements View.OnClickListener {
     public static final String TAG = "HSQ";
     private TextView tv_2;
+    @Inject
     Product product;
     @Inject
     Factory factory;
@@ -42,7 +46,7 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         DaggerSecondActivityComponent.builder().build().injectXXX(this);
 
 //        Log.e(TAG, "Product的属性i=" + product.i);
-        Log.e(TAG, "Factory的属性j=" + factory.product.i);
+        Log.e(TAG, "Factory的属性j=" + factory.j);
 
     }
 

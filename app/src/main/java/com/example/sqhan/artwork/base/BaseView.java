@@ -7,7 +7,7 @@ import android.content.Context;
  */
 
 public interface BaseView<T extends BasePresenter> {
-    void setPresenter(T presenter);
+//    void setPresenter(T presenter);//改为使用dagger2注入
 
     Context getContext();
 }

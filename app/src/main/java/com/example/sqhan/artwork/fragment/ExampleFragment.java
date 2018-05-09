@@ -24,10 +24,11 @@ public class ExampleFragment extends BaseFragment implements ExampleContract.Vie
     }
 
     //在对应的presenter中执行该方法：mView.setPresenter(this);
-    @Override
+    //改为使用dagger2注入
+    /*@Override
     public void setPresenter(ExampleContract.Presenter presenter) {
         mPresenter = presenter;
-    }
+    }*/
 
     @Override
     public void showToast() {

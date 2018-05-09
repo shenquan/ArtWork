@@ -16,7 +16,10 @@ import com.example.sqhan.artwork.base.BaseActivity;
 import com.example.sqhan.artwork.service.LocalService;
 
 /**
- * Created by sqhan on 2018/5/3.
+ * Created by sqhan on 2018/5/3
+ * <p>
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
  */
 
 public class BindServiceActivity extends BaseActivity implements View.OnClickListener {
