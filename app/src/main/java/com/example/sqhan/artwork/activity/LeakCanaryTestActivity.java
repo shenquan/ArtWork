@@ -10,7 +10,14 @@ import com.example.sqhan.artwork.base.BaseApplication;
 import com.example.sqhan.artwork.other.TestManager;
 import com.squareup.leakcanary.RefWatcher;
 
-public class LeakCanaryActivity extends BaseActivity {
+/**
+ * Created by sqhan on 2018/5/8
+ * <p>
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
+ */
+
+public class LeakCanaryTestActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

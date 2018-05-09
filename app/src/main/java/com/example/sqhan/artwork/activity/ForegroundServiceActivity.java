@@ -20,7 +20,7 @@ import com.example.sqhan.artwork.service.ForegroundService;
  * Created by sqhan on 2018/5/3.
  */
 
-public class ForegroundActivity extends BaseActivity implements View.OnClickListener {
+public class ForegroundServiceActivity extends BaseActivity implements View.OnClickListener {
     private Button startForeground;
     private Button stopForeground;
     private Button notify_btn;

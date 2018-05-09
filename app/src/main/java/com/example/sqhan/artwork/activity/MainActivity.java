@@ -26,6 +26,13 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by sqhan on 2018/5/1
+ * <p>
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
+ */
+
 public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
     private MainContract.Presenter mPresenter;
     private TextView tv_1;
@@ -100,13 +107,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
     @Override
     public void openBindServicePageUI() {
-        Intent intent = new Intent(mContext, BindActivity.class);
+        Intent intent = new Intent(mContext, BindServiceActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void openForegroundServicePageUI() {
-        Intent intent = new Intent(mContext, ForegroundActivity.class);
+        Intent intent = new Intent(mContext, ForegroundServiceActivity.class);
         startActivity(intent);
     }
 
@@ -124,7 +131,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         } else if (id == R.id.btn_4) {
             mPresenter.openForegroundServicePage();//打开前台服务页面
         } else if (id == R.id.openLeakCanaryActivity) {
-            Intent intent = new Intent(mContext, LeakCanaryActivity.class);
+            Intent intent = new Intent(mContext, LeakCanaryTestActivity.class);
             startActivity(intent);
         }
     }

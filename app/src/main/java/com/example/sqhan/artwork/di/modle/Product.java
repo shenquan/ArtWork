@@ -3,7 +3,9 @@ package com.example.sqhan.artwork.di.modle;
 import javax.inject.Inject;
 
 public class Product {
-    @inject
+    public int i = 1;
+
+    @Inject
     public Product() {
     }
 }

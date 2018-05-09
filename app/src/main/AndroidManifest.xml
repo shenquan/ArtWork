@@ -71,11 +71,11 @@
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.BindActivity"
+            android:name=".activity.BindServiceActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ForegroundActivity"
+            android:name=".activity.ForegroundServiceActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
@@ -84,7 +84,7 @@
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.LeakCanaryActivity"
+            android:name=".activity.LeakCanaryTestActivity"
              />
 
         <service android:name=".service.SimpleService" />

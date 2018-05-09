@@ -19,7 +19,7 @@ import com.example.sqhan.artwork.service.LocalService;
  * Created by sqhan on 2018/5/3.
  */
 
-public class BindActivity extends BaseActivity implements View.OnClickListener {
+public class BindServiceActivity extends BaseActivity implements View.OnClickListener {
     private final static String TAG = "hsq";
 
     private Button btnBind;
