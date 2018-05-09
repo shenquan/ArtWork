@@ -8,9 +8,13 @@ import android.widget.TextView;
 
 import com.example.sqhan.artwork.R;
 import com.example.sqhan.artwork.base.BaseActivity;
+import com.example.sqhan.artwork.di.component.DaggerFruitComponent;
 import com.example.sqhan.artwork.di.component.DaggerSecondActivityComponent;
+import com.example.sqhan.artwork.di.modle.Apple;
 import com.example.sqhan.artwork.di.modle.Factory;
+import com.example.sqhan.artwork.di.modle.Fruit;
 import com.example.sqhan.artwork.di.modle.Product;
+import com.example.sqhan.artwork.di.module.AppleModule;
 import com.example.sqhan.artwork.model.events.ChangeMainActivityTextEvent;
 import com.example.sqhan.artwork.model.events.ChangeSecondActivityTextEvent;
 import com.example.sqhan.artwork.utils.AndroidUtil;
@@ -35,6 +39,10 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     Product product;
     @Inject
     Factory factory;
+    @Inject
+    Apple apple;
+    @Inject
+    Fruit fruit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,9 +52,12 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 //        DaggerSecondActivityComponent.create().injectXXX(this);
         //方式二:用builder的方式，我推荐用这个，因为带module的就是用的这个
         DaggerSecondActivityComponent.builder().build().injectXXX(this);
+        DaggerFruitComponent.builder().appleModule(new AppleModule()).build().inject(this);
 
 //        Log.e(TAG, "Product的属性i=" + product.i);
         Log.e(TAG, "Factory的属性j=" + factory.j);
+        Log.e(TAG, "Apple的属性name=" + apple.name);
+        Log.e(TAG, "Fruit中Apple的属性name=" + fruit.apple.name);
 
     }
 

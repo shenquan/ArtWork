@@ -15,6 +15,7 @@ import com.example.sqhan.artwork.R;
 import com.example.sqhan.artwork.base.BaseActivity;
 import com.example.sqhan.artwork.contract.MainContract;
 import com.example.sqhan.artwork.di.component.DaggerMainActivityComponent;
+import com.example.sqhan.artwork.di.modle.Fruit;
 import com.example.sqhan.artwork.di.module.MainModule;
 import com.example.sqhan.artwork.model.events.ChangeMainActivityTextEvent;
 import com.example.sqhan.artwork.model.events.ChangeSecondActivityTextEvent;
@@ -40,6 +41,7 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
     @Inject
     MainPresenter mPresenter;
+
 
     private TextView tv_1;
     private Button btn_1;
