@@ -15,7 +15,6 @@ import com.example.sqhan.artwork.R;
 import com.example.sqhan.artwork.base.BaseActivity;
 import com.example.sqhan.artwork.contract.MainContract;
 import com.example.sqhan.artwork.di.component.DaggerMainActivityComponent;
-import com.example.sqhan.artwork.di.modle.Fruit;
 import com.example.sqhan.artwork.di.module.MainModule;
 import com.example.sqhan.artwork.model.events.ChangeMainActivityTextEvent;
 import com.example.sqhan.artwork.model.events.ChangeSecondActivityTextEvent;
@@ -31,6 +30,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by sqhan on 2018/5/1
  * <p>
@@ -43,12 +46,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     MainPresenter mPresenter;
 
 
-    private TextView tv_1;
+    //    private TextView tv_1;
+    @BindView(R.id.tv_1)
+    TextView tv_1;
     private Button btn_1;
     private Button btn_2;
     private Button btn_3;
     private Button btn_4;
     private Button openLeakCanaryActivity;
+    @BindView(R.id.butter_knife_btn)
+    Button butter_knife_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +74,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         super.initView();
         //在这里setContentView
         setContentView(R.layout.activity_main);
+        //绑定初始化ButterKnife
+        ButterKnife.bind(this);
 
-        tv_1 = (TextView) findViewById(R.id.tv_1);
+//        tv_1 = (TextView) findViewById(R.id.tv_1);
         btn_1 = (Button) findViewById(R.id.btn_1);
         btn_2 = (Button) findViewById(R.id.btn_2);
         btn_3 = (Button) findViewById(R.id.btn_3);
@@ -87,6 +96,14 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         btn_4.setOnClickListener(this);
         openLeakCanaryActivity.setOnClickListener(this);
     }
+
+    @OnClick(R.id.butter_knife_btn)
+    public void onClickXXX(Button button) {
+        AndroidUtil.showOneToast(mContext, "我被点击了");
+        button.setText("我改变了");
+    }
+
+
     //改为使用dagger2注入
     /*@Override
     public void setPresenter(MainContract.Presenter presenter) {
