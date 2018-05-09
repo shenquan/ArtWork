@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.antfortune.freeline'
+//不要加下面这句，会出错：
+//java.lang.NoSuchMethodError: com.github.javaparser.ast.CompilationUnit.getTypes()Lcom/github/javaparser/ast/NodeList;
+//apply plugin: 'com.jakewharton.butterknife'
 
 def outputPathName = "${rootDir}/apk"
 
