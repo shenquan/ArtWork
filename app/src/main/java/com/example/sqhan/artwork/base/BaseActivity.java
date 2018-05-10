@@ -23,7 +23,9 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         mTypeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/my_iconfont.ttf");
-        //注意顺序
+
+        //注意顺序,子类需要重写。但用了ButterKnife之后就不需要下面这两个初始化了。
+        //算是选择性使用吧！
         initView();//子类需要重写
         initEvents();//子类需要重写
 

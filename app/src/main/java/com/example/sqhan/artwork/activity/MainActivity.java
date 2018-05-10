@@ -41,35 +41,41 @@ import butterknife.OnClick;
  * 落在谷底，思人生
  */
 
-public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
+public class MainActivity extends BaseActivity implements MainContract.View {
     @Inject
     MainPresenter mPresenter;
-
-
-    //    private TextView tv_1;
     @BindView(R.id.tv_1)
-    TextView tv_1;
-    private Button btn_1;
-    private Button btn_2;
-    private Button btn_3;
-    private Button btn_4;
-    private Button openLeakCanaryActivity;
+    TextView tv1;
+    @BindView(R.id.btn_1)
+    Button btn1;
+    @BindView(R.id.btn_2)
+    Button btn2;
+    @BindView(R.id.btn_3)
+    Button btn3;
+    @BindView(R.id.btn_4)
+    Button btn4;
+    @BindView(R.id.open_leak_canary_activity)
+    Button openLeakCanaryActivity;
     @BindView(R.id.butter_knife_btn)
-    Button butter_knife_btn;
+    Button butterKnifeBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new MainPresenter(this);
+        setContentView(R.layout.activity_main);
+        //绑定初始化ButterKnife
+        ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        new MainPresenter(this);
         getPrim();
 
         DaggerMainActivityComponent.builder().mainModule(new MainModule(this)).build().inject(this);
 
 
     }
-
-    @Override
+    //是否选择使用，选择性的重写这两个方式
+    /*@Override
     protected void initView() {
         super.initView();
         //在这里setContentView
@@ -77,31 +83,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         //绑定初始化ButterKnife
         ButterKnife.bind(this);
 
-//        tv_1 = (TextView) findViewById(R.id.tv_1);
-        btn_1 = (Button) findViewById(R.id.btn_1);
-        btn_2 = (Button) findViewById(R.id.btn_2);
-        btn_3 = (Button) findViewById(R.id.btn_3);
-        btn_4 = (Button) findViewById(R.id.btn_4);
-        openLeakCanaryActivity = (Button) findViewById(R.id.openLeakCanaryActivity);
-
     }
 
     @Override
     protected void initEvents() {
         super.initEvents();
-        tv_1.setOnClickListener(this);
-        btn_1.setOnClickListener(this);
-        btn_2.setOnClickListener(this);
-        btn_3.setOnClickListener(this);
-        btn_4.setOnClickListener(this);
-        openLeakCanaryActivity.setOnClickListener(this);
-    }
-
-    @OnClick(R.id.butter_knife_btn)
-    public void onClickXXX(Button button) {
-        AndroidUtil.showOneToast(mContext, "我被点击了");
-        button.setText("我改变了");
-    }
+    }*/
 
 
     //改为使用dagger2注入
@@ -124,7 +111,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
     @Override
     public void changeTextUI(String str) {
-        tv_1.setText(str);
+        tv1.setText(str);
     }
 
     @Override
@@ -145,7 +132,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         startActivity(intent);
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btn_1) {
@@ -162,11 +149,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
             Intent intent = new Intent(mContext, LeakCanaryTestActivity.class);
             startActivity(intent);
         }
-    }
+    }*/
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ChangeMainActivityTextEvent event) {
-        tv_1.setText(event.text);
+        tv1.setText(event.text);
         AndroidUtil.showOneToast(mContext, event.text);
     }
 
@@ -177,7 +164,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent11(ChangeMainActivityTextEvent event) {
-        tv_1.setText(event.text);
+        tv1.setText(event.text);
         AndroidUtil.showOneToast(mContext, "111");
     }
 
@@ -216,4 +203,35 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         return true;
     }
 
+    @OnClick({R.id.tv_1, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.open_leak_canary_activity, R.id.butter_knife_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_1:
+                mPresenter.changeText();
+                break;
+            case R.id.btn_1:
+                mPresenter.openPage();
+                break;
+            case R.id.btn_2:
+                //打开简单启动服务页面
+                mPresenter.openSimpleServicePage();
+                break;
+            case R.id.btn_3:
+                //打开绑定服务页面
+                mPresenter.openBindServicePage();
+                break;
+            case R.id.btn_4:
+                //打开前台服务页面
+                mPresenter.openForegroundServicePage();
+                break;
+            case R.id.open_leak_canary_activity:
+                Intent intent = new Intent(mContext, LeakCanaryTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.butter_knife_btn:
+                AndroidUtil.showOneToast(mContext, "我被点击了");
+                ((TextView) view).setText("我改变了");
+                break;
+        }
+    }
 }
