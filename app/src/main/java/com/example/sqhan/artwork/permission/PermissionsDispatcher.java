@@ -116,8 +116,50 @@ public final class PermissionsDispatcher {
         }
     }
 
+    /**
+     * 得到未授权的：包括“不再提醒”，“不再提醒”的数组
+     * by sqhan
+     *
+     * @param act
+     * @param permissions
+     */
+    public static void getNotAuthorizationPermissionsArray(final Activity act, String... permissions) {
+        //1.区分权限已授权和未授权
+        PermissionUtils.sortGrantedAndDeniedPermissions(act, permissions);
+        //2.未授权权限进行处理，区分“不再提醒”还是“不再提醒”
+        if (PermissionUtils.getDeniedPermissions().size() > 0) {
+            List<String> deniedPermissionsList = PermissionUtils.getDeniedPermissions();
+            String[] deniedPermissionsArr = deniedPermissionsList.toArray(new String[deniedPermissionsList.size()]);
+            if (deniedPermissionsArr.length > 0) {
+                PermissionUtils.sortUnshowPermission(act, deniedPermissionsArr);
+            }
+        }
+    }
+
+    /**
+     * 对于不再提醒权限的处理
+     * by sqhan
+     */
+    public static void handleNotRemind(final Activity act) {
+        if (PermissionUtils.getUnshowedPermissions().size() > 0) {
+            List<String> unShowPermissionsList = PermissionUtils.getUnshowedPermissions();
+            StringBuilder message = getUnShowPermissionsMessage(unShowPermissionsList);
+            new android.support.v7.app.AlertDialog.Builder(act)
+                    .setMessage(message)
+                    .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            gotoPermissionSetting(act);
+                            act.finish();//关闭splash页面，防止用户没有真正的设置权限。使其重新进入app即可。
+                        }
+                    })
+                    .create().show();
+        }
+    }
+
+
     private static StringBuilder getUnShowPermissionsMessage(List<String> list) {
-        StringBuilder message = new StringBuilder("您已关闭了");
+        StringBuilder message = new StringBuilder("您已关闭了 ");
         String permisson;
         boolean hasCALENDAR = false;
         boolean hasCAMERA = false;

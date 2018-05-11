@@ -1,12 +1,8 @@
 package com.example.sqhan.artwork.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,9 +20,6 @@ import com.example.sqhan.artwork.utils.AndroidUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -68,7 +61,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         new MainPresenter(this);
-        getPrim();
+
 
         DaggerMainActivityComponent.builder().mainModule(new MainModule(this)).build().inject(this);
 
@@ -172,35 +165,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
-
-    //相关权限申请
-    private void getPrim() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            final List<String> permissionsList = new ArrayList<String>();
-            addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE);
-            addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            addPermission(permissionsList, Manifest.permission.CAMERA);
-//            addPermission(permissionsList, Manifest.permission.CALL_PHONE);
-            addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION);
-            addPermission(permissionsList, Manifest.permission.ACCESS_COARSE_LOCATION);
-            //   addPermission(permissionsList,Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
-            if (permissionsList.size() > 0) {
-                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 0x111);
-            } else {
-//                gotoMainActivity();
-            }
-        } else {
-//            gotoMainActivity();
-        }
-    }
-
-    private boolean addPermission(List<String> permissionsList, String permission) {
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-            permissionsList.add(permission);
-            return false;
-        }
-        return true;
     }
 
     @OnClick({R.id.tv_1, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.open_leak_canary_activity, R.id.butter_knife_btn})

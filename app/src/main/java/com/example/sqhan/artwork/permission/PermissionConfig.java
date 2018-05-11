@@ -34,9 +34,12 @@ public class PermissionConfig {
 
     void showPermissionDialog(String message, Activity activity, DialogInterface.OnClickListener cancleListener, DialogInterface.OnClickListener settingListener) {
         if (config == null) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(activity).setMessage(message)
+//                    .setPositiveButton("设置", settingListener)
+//                    .setNegativeButton("取消", cancleListener);
+            //把取消按钮去掉
             AlertDialog.Builder builder = new AlertDialog.Builder(activity).setMessage(message)
-                    .setPositiveButton("设置", settingListener)
-                    .setNegativeButton("取消", cancleListener);
+                    .setPositiveButton("设置", settingListener);
             builder.create().show();
         } else {
             config.showPermissionDialog(message, activity, cancleListener, settingListener);
