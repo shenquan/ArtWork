@@ -50,7 +50,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.SplashActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
@@ -60,7 +60,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SecondActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
@@ -83,9 +87,7 @@
             android:name=".activity.NotificationOpenActivity"
             android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.LeakCanaryTestActivity"
-             />
+        <activity android:name=".activity.LeakCanaryTestActivity" />
 
         <service android:name=".service.SimpleService" />
         <service android:name=".service.LocalService" />

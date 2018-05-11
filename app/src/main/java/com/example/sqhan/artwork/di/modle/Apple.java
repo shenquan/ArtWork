@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 public class Apple {
     public String name = "苹果";
+
     @Inject
     public Apple() {
     }
