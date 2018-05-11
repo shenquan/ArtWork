@@ -17,8 +17,10 @@ import java.util.List;
 
 /**
  * 权限管理工具类
- * <p/>
- * Created by pengjiang on 2015/10/8.
+ * Modified by sqhan on 2018/5/11
+ * <p>
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
  */
 public final class PermissionsDispatcher {
     private static boolean mIsShowDialog = true;

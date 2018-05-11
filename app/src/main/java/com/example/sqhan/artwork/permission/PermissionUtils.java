@@ -10,9 +10,12 @@ import android.support.v4.content.PermissionChecker;
 import java.util.ArrayList;
 import java.util.List;
 
-/***
+/**
  * 权限工具类
- * Created by pengjiang on 2015/10/8.
+ * Modified by sqhan on 2018/5/11
+ * <p>
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
  */
 public class PermissionUtils {
     private static List<String> mGrantedPermissions = new ArrayList<String>();
@@ -175,7 +178,4 @@ public class PermissionUtils {
         }
     }
 
-    public static boolean areNotificationsEnabled(Context context) {
-        return NotificationPermissionUtils.areNotificationsEnabled(context);
-    }
 }

@@ -5,7 +5,10 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 /**
- * Created by dev on 2017/5/25.
+ * Modified by sqhan on 2018/5/11
+ * <p>
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
  */
 
 public class PermissionConfig {
@@ -34,12 +37,9 @@ public class PermissionConfig {
 
     void showPermissionDialog(String message, Activity activity, DialogInterface.OnClickListener cancleListener, DialogInterface.OnClickListener settingListener) {
         if (config == null) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(activity).setMessage(message)
-//                    .setPositiveButton("设置", settingListener)
-//                    .setNegativeButton("取消", cancleListener);
-            //把取消按钮去掉
             AlertDialog.Builder builder = new AlertDialog.Builder(activity).setMessage(message)
-                    .setPositiveButton("设置", settingListener);
+                    .setPositiveButton("设置", settingListener)
+                    .setNegativeButton("取消", cancleListener);
             builder.create().show();
         } else {
             config.showPermissionDialog(message, activity, cancleListener, settingListener);
