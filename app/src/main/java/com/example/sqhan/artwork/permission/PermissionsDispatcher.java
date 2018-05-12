@@ -400,6 +400,7 @@ public final class PermissionsDispatcher {
 
     /**
      * do their permissions results for fragment
+     * 对于activity应该也可以，by sqhan。
      *
      * @param requestCode
      * @param permissions

@@ -51,8 +51,8 @@ public class SplashActivity extends BaseActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 11;
     private String[] requestPermissionsArr = new String[]{
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,//写权限一旦被赋予，读权限即被赋予
             Manifest.permission.CAMERA,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
