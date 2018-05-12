@@ -25,13 +25,11 @@ import java.util.List;
  */
 
 public class SplashActivity extends BaseActivity {
-    private boolean isRequireCheck;// 是否需要系统权限检测
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isRequireCheck = true;
-
+        getPermissions();//请求权限
     }
 
     @Override
@@ -49,9 +47,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isRequireCheck) {
-            getPermissions();//请求权限
-        }
     }
 
     private static final int PERMISSION_REQUEST_CODE = 11;
@@ -65,40 +60,6 @@ public class SplashActivity extends BaseActivity {
             Manifest.permission.CALL_PHONE,
 
     };
-
-    //可以检测一个权限或者多个权限。
-    //适合点击相机检测是否有权限使用。不适合splash页面轮询。
-    //参考我的有道云笔记总结：“携程自己的点击打开照相机的权限设置”
-    private void checkPermissions() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            PermissionsDispatcher.checkPermissions((Activity) mContext, PERMISSION_REQUEST_CODE, new PermissionListener() {
-                @Override
-                public void onPermissionsGranted(int requestCode, int[] grantResults, String... permissions) {
-
-                }
-
-                @Override
-                public void onPermissionsDenied(int requestCode, int[] grantResults, String... permissions) {
-                    if (permissions != null && permissions.length > 0) {
-                    }
-                }
-
-                @Override
-                public void onShowRequestPermissionRationale(int requestCode, boolean isShowRationale, String... permissions) {
-                    if (permissions != null && permissions.length > 0) {
-
-                    }
-                }
-
-                @Override
-                public void onPermissionsError(int requestCode, int[] grantResults, String errorMsg, String... permissions) {
-
-                }
-            }, requestPermissionsArr);
-        } else {
-            goToMain();
-        }
-    }
 
     /**
      * 得到未被授权的权限
@@ -135,16 +96,6 @@ public class SplashActivity extends BaseActivity {
         return true;
     }
 
-    // 是否已允许全部的权限
-    private boolean hasAllPermissionsGranted(int[] grantResults) {
-        for (int grantResult : grantResults) {
-            if (grantResult == PackageManager.PERMISSION_DENIED) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private void goToMain() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -165,13 +116,56 @@ public class SplashActivity extends BaseActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (getNotAuthorizationList().size() > 0) {//不再循环调用，对于拒绝的权限（包括不再提醒的）让用户去设置
-                isRequireCheck = false;
                 List<String> deniedPermissionsList = getNotAuthorizationList();
                 PermissionsDispatcher.goToSettings((Activity) mContext, deniedPermissionsList);
             } else {
                 goToMain();
             }
         }
+    }
+
+    //可以检测一个权限或者多个权限。
+    //适合点击相机检测是否有权限使用。不适合splash页面轮询。
+    //参考我的有道云笔记总结：“携程自己的点击打开照相机的权限设置”
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            PermissionsDispatcher.checkPermissions((Activity) mContext, PERMISSION_REQUEST_CODE, new PermissionListener() {
+                @Override
+                public void onPermissionsGranted(int requestCode, int[] grantResults, String... permissions) {
+
+                }
+
+                @Override
+                public void onPermissionsDenied(int requestCode, int[] grantResults, String... permissions) {
+                    if (permissions != null && permissions.length > 0) {
+                    }
+                }
+
+                @Override
+                public void onShowRequestPermissionRationale(int requestCode, boolean isShowRationale, String... permissions) {
+                    if (permissions != null && permissions.length > 0) {
+
+                    }
+                }
+
+                @Override
+                public void onPermissionsError(int requestCode, int[] grantResults, String errorMsg, String... permissions) {
+
+                }
+            }, requestPermissionsArr);
+        } else {
+            goToMain();
+        }
+    }
+
+    // 是否已允许全部的权限
+    private boolean hasAllPermissionsGranted(int[] grantResults) {
+        for (int grantResult : grantResults) {
+            if (grantResult == PackageManager.PERMISSION_DENIED) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
