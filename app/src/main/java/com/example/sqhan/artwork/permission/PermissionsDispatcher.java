@@ -139,7 +139,8 @@ public final class PermissionsDispatcher {
     }
 
     /**
-     * 对于不再提醒权限的处理
+     * 对于不再提醒权限的处理：这个小米手机与华为手机测试的不再提醒的情况正好相反。。
+     * todo 所以不使用这个方法
      * by sqhan
      */
     public static void handleNotRemind(final Activity act) {
@@ -147,6 +148,7 @@ public final class PermissionsDispatcher {
             List<String> unShowPermissionsList = PermissionUtils.getUnshowedPermissions();
             StringBuilder message = getUnShowPermissionsMessage(unShowPermissionsList);
             new android.support.v7.app.AlertDialog.Builder(act)
+                    .setTitle("帮助")
                     .setMessage(message)
                     .setPositiveButton("设置", new DialogInterface.OnClickListener() {
                         @Override
@@ -155,12 +157,29 @@ public final class PermissionsDispatcher {
                             act.finish();//关闭splash页面，防止用户没有真正的设置权限。使其重新进入app即可。
                         }
                     })
+                    .setCancelable(false)
                     .create().show();
         }
     }
 
+    public static void goToSettings(final Activity act, List<String> deniedPermissionsList) {
+        StringBuilder message = getUnShowPermissionsMessage(deniedPermissionsList);
+        new android.support.v7.app.AlertDialog.Builder(act)
+                .setTitle("帮助")
+                .setMessage(message)
+                .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        gotoPermissionSetting(act);
+                        act.finish();//关闭splash页面，防止用户没有真正的设置权限。使其重新进入app即可。
+                    }
+                })
+                .setCancelable(false)
+                .create().show();
+    }
 
-    private static StringBuilder getUnShowPermissionsMessage(List<String> list) {
+
+    public static StringBuilder getUnShowPermissionsMessage(List<String> list) {
         StringBuilder message = new StringBuilder("您已关闭了 ");
         String permisson;
         boolean hasCALENDAR = false;
@@ -255,7 +274,7 @@ public final class PermissionsDispatcher {
             }
         }
 
-        message.append("访问权限，为了保证功能的正常使用，请前往系统设置页面开启");
+        message.append("访问权限，为了保证功能的正常使用，请前往系统设置页面开启。");
         return message;
     }
 
