@@ -8,11 +8,11 @@ import com.example.sqhan.artwork.base.BaseView;
  */
 
 public interface ExampleContract {
-    interface Presenter extends BasePresenter {
+    interface IPresenter extends BasePresenter {
 
     }
 
-    interface View extends BaseView<Presenter> {
+    interface IView extends BaseView<IPresenter> {
         void showToast();
     }
 

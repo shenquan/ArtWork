@@ -14,8 +14,8 @@ import com.example.sqhan.artwork.utils.AndroidUtil;
  * Created by sqhan on 2018/4/23.
  */
 
-public class ExampleFragment extends BaseFragment implements ExampleContract.View {
-    private ExampleContract.Presenter mPresenter;
+public class ExampleFragment extends BaseFragment implements ExampleContract.IView {
+    private ExampleContract.IPresenter mPresenter;
 
     @Nullable
     @Override

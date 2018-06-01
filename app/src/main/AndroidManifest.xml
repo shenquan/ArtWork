@@ -89,9 +89,21 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.LeakCanaryTestActivity" />
 
+        <activity
+            android:name=".activity.APageActivity"
+            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.BPageActivity"
+            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <!--Service Start-->
         <service android:name=".service.SimpleService" />
         <service android:name=".service.LocalService" />
         <service android:name=".service.ForegroundService" />
+        <!--Service End-->
 
     </application>
 

@@ -13,14 +13,14 @@ import dagger.Provides;
  */
 @Module
 public class MainModule {
-    private final MainContract.View view;
+    private final MainContract.IView view;
 
-    public MainModule(MainContract.View view) {
+    public MainModule(MainContract.IView view) {
         this.view = view;
     }
 
     @Provides
-    MainContract.View provideMainContractView() {
+    MainContract.IView provideMainContractView() {
         return view;
     }
 

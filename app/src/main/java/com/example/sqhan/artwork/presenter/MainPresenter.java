@@ -10,12 +10,12 @@ import javax.inject.Inject;
  * Created by sqhan on 2018/4/23.
  */
 
-public class MainPresenter implements MainContract.Presenter {
+public class MainPresenter implements MainContract.IPresenter {
     private Context mContext;
-    private MainContract.View mView;
+    private MainContract.IView mView;
 
     @Inject
-    public MainPresenter(MainContract.View view) {
+    public MainPresenter(MainContract.IView view) {
         mContext = view.getContext();
         mView = view;
 //        mView.setPresenter(this);//改为使用dagger2注入

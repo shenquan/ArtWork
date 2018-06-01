@@ -34,9 +34,10 @@ import butterknife.OnClick;
  * 落在谷底，思人生
  */
 
-public class MainActivity extends BaseActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.IView {
     @Inject
     MainPresenter mPresenter;
+
     @BindView(R.id.tv_1)
     TextView tv1;
     @BindView(R.id.btn_1)
@@ -51,6 +52,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     Button openLeakCanaryActivity;
     @BindView(R.id.butter_knife_btn)
     Button butterKnifeBtn;
+    @BindView(R.id.main_open_a_page)
+    Button mainOpenAPage;
 
 
     @Override
@@ -167,7 +170,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.tv_1, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.open_leak_canary_activity, R.id.butter_knife_btn})
+    @OnClick({R.id.tv_1, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.open_leak_canary_activity, R.id.butter_knife_btn, R.id.main_open_a_page})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_1:
@@ -196,6 +199,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 AndroidUtil.showOneToast(mContext, "我被点击了");
                 ((TextView) view).setText("我改变了");
                 break;
+            case R.id.main_open_a_page:
+                Intent intent1 = new Intent(mContext, APageActivity.class);
+                startActivity(intent1);
         }
     }
+
 }

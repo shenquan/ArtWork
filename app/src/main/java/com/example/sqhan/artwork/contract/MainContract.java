@@ -8,7 +8,7 @@ import com.example.sqhan.artwork.base.BaseView;
  */
 
 public interface MainContract {
-    interface Presenter extends BasePresenter {
+    interface IPresenter extends BasePresenter {
         void changeText();//点击文字
 
         void openPage();//打开第二个页面
@@ -20,7 +20,7 @@ public interface MainContract {
         void openForegroundServicePage();//打开前台服务页面
     }
 
-    interface View extends BaseView<Presenter> {
+    interface IView extends BaseView<IPresenter> {
 
         void changeTextUI(String str);
 
