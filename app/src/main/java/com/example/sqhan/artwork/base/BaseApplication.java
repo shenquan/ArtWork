@@ -7,6 +7,7 @@ import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 
 /**
  * Created by sqhan on 2018/4/23.
@@ -32,5 +33,12 @@ public class BaseApplication extends Application {
         }*/
         refWatcher = LeakCanary.install(this);
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        // 安装tinker
+        Beta.installTinker();
     }
 }

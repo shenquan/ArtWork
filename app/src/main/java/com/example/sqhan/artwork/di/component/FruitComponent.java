@@ -11,7 +11,7 @@ import dagger.Component;
  * 站在顶峰，看世界
  * 落在谷底，思人生
  */
-//@Component(modules = {AppleModule.class, MainModule.class})//也许这样可以同时注册两个，但不要这样了，分别注册吧~
+//@Component(modules = {AppleModule.class, MainModule.class})//貌似这样可以同时注册两个。但最好不要这样，分别注册吧~
 @Component(modules = {AppleModule.class})
 public interface FruitComponent {
     void inject(SecondActivity secondActivity);
