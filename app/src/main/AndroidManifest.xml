@@ -29,13 +29,6 @@
     <!-- 添加快捷方式 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 使设备震动 -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- 可调用getRunningTasks -->
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- SD卡读取权限，用户写入离线定位数据 -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -104,6 +97,15 @@
         <service android:name=".service.LocalService" />
         <service android:name=".service.ForegroundService" />
         <!--Service End-->
+
+        <!--kotlinModule start-->
+        <activity
+            android:name="com.example.kotlinmodule.TestActivity"
+            android:configChanges="locale|fontScale|orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+
+        <!--kotlinModule end-->
 
     </application>
 

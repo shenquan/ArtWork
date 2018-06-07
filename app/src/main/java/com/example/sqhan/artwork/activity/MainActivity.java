@@ -170,7 +170,10 @@ public class MainActivity extends BaseActivity implements MainContract.IView {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.tv_1, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.open_leak_canary_activity, R.id.butter_knife_btn, R.id.main_open_a_page})
+    @OnClick({R.id.tv_1, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4,
+            R.id.open_leak_canary_activity, R.id.butter_knife_btn, R.id.main_open_a_page,
+            R.id.openKotlinPage
+    })
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_1:
@@ -191,17 +194,24 @@ public class MainActivity extends BaseActivity implements MainContract.IView {
                 //打开前台服务页面
                 mPresenter.openForegroundServicePage();
                 break;
-            case R.id.open_leak_canary_activity:
+            case R.id.open_leak_canary_activity: {
                 Intent intent = new Intent(mContext, LeakCanaryTestActivity.class);
                 startActivity(intent);
-                break;
+            }
+            break;
             case R.id.butter_knife_btn:
                 AndroidUtil.showOneToast(mContext, "我被点击了");
                 ((TextView) view).setText("我改变了");
                 break;
-            case R.id.main_open_a_page:
-                Intent intent1 = new Intent(mContext, APageActivity.class);
-                startActivity(intent1);
+            case R.id.main_open_a_page: {
+                Intent intent = new Intent(mContext, APageActivity.class);
+                startActivity(intent);
+            }
+            case R.id.openKotlinPage: {
+                Intent intent = new Intent(mContext, com.example.kotlinmodule.TestActivity.class);
+                startActivity(intent);
+            }
+
         }
     }
 
