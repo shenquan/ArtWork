@@ -2,6 +2,7 @@ package com.example.sqhan.artwork.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,11 @@ public class BPageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b_page_layout);
         ButterKnife.bind(this);
+
+        new Handler().post(() -> {
+            int x = 1;
+            System.out.println("Java 8 lambda表达式测试，x=" + x);
+        });
 
 
     }
