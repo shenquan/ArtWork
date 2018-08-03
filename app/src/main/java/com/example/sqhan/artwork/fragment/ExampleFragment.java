@@ -37,4 +37,8 @@ public class ExampleFragment extends BaseFragment implements ExampleContract.IVi
     }
 
 
+    @Override
+    public void setPresenter(ExampleContract.IPresenter presenter) {
+
+    }
 }

@@ -4,8 +4,6 @@ import android.content.Context;
 
 import com.example.sqhan.artwork.contract.MainContract;
 
-import javax.inject.Inject;
-
 /**
  * Created by sqhan on 2018/4/23.
  */
@@ -14,36 +12,60 @@ public class MainPresenter implements MainContract.IPresenter {
     private Context mContext;
     private MainContract.IView mView;
 
-    @Inject
     public MainPresenter(MainContract.IView view) {
         mContext = view.getContext();
         mView = view;
-//        mView.setPresenter(this);//改为使用dagger2注入
+        mView.setPresenter(this);
     }
 
     @Override
     public void changeText() {
-//        mView.changeTextUI("改变之后的文本");
-        mView.changeTextUI("改变之后的最终文本");
+        if (mView == null) {
+            return;
+        }
+        mView.changeTextUI("改变之后最终的文本");
     }
 
     @Override
     public void openPage() {
+        if (mView == null) {
+            return;
+        }
         mView.openPageUI();
     }
 
     @Override
     public void openSimpleServicePage() {
+        if (mView == null) {
+            return;
+        }
         mView.openSimpleServicePageUI();
     }
 
     @Override
     public void openBindServicePage() {
+        if (mView == null) {
+            return;
+        }
         mView.openBindServicePageUI();
     }
 
     @Override
     public void openForegroundServicePage() {
+        if (mView == null) {
+            return;
+        }
         mView.openForegroundServicePageUI();
+    }
+
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void end() {
+        mView = null;
     }
 }

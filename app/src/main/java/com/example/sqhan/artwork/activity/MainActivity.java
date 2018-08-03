@@ -2,9 +2,6 @@ package com.example.sqhan.artwork.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +12,6 @@ import com.example.kotlinmodule.TestActivity;
 import com.example.sqhan.artwork.R;
 import com.example.sqhan.artwork.base.BaseActivity;
 import com.example.sqhan.artwork.contract.MainContract;
-import com.example.sqhan.artwork.di.component.DaggerMainActivityComponent;
-import com.example.sqhan.artwork.di.module.MainModule;
 import com.example.sqhan.artwork.model.events.ChangeMainActivityTextEvent;
 import com.example.sqhan.artwork.model.events.ChangeSecondActivityTextEvent;
 import com.example.sqhan.artwork.presenter.MainPresenter;
@@ -25,8 +20,6 @@ import com.example.sqhan.artwork.utils.AndroidUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,8 +33,7 @@ import butterknife.OnClick;
  */
 
 public class MainActivity extends BaseActivity implements MainContract.IView {
-    @Inject
-    MainPresenter mPresenter;
+    MainContract.IPresenter mPresenter;
 
     @BindView(R.id.tv_1)
     TextView tv1;
@@ -72,9 +64,6 @@ public class MainActivity extends BaseActivity implements MainContract.IView {
         EventBus.getDefault().register(this);
         new MainPresenter(this);
 
-        DaggerMainActivityComponent.builder().mainModule(new MainModule(this)).build().inject(this);
-
-        releaseImageViewResouce(image);
 //        mainOpenAPage.setText(null);//不会crash，因为源码里面判空了，若为null，则改为""。
     }
     //是否选择使用，选择性的重写这两个方式
@@ -94,11 +83,10 @@ public class MainActivity extends BaseActivity implements MainContract.IView {
     }*/
 
 
-    //改为使用dagger2注入
-    /*@Override
-    public void setPresenter(MainContract.Presenter presenter) {
+    @Override
+    public void setPresenter(MainContract.IPresenter presenter) {
         mPresenter = presenter;
-    }*/
+    }
 
     @Override
     public Context getContext() {
@@ -175,6 +163,10 @@ public class MainActivity extends BaseActivity implements MainContract.IView {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        if (mPresenter != null) {
+            mPresenter.end();
+            mPresenter = null;
+        }
     }
 
     @OnClick({R.id.tv_1, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4,
@@ -227,21 +219,4 @@ public class MainActivity extends BaseActivity implements MainContract.IView {
         AndroidUtil.showOneToast(mContext, "我是图片，我被点击了");
     }
 
-    /**
-     * 释放图片资源
-     *
-     * @param imageView
-     * @author https://www.cnblogs.com/0616--ataozhijia/p/3954402.html
-     */
-    public static void releaseImageViewResouce(ImageView imageView) {
-        if (imageView == null) return;
-        Drawable drawable = imageView.getDrawable();
-        if (drawable != null && drawable instanceof BitmapDrawable) {//只能释放bitmap类型的吗？
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            Bitmap bitmap = bitmapDrawable.getBitmap();
-            if (bitmap != null && !bitmap.isRecycled()) {
-                bitmap.recycle();
-            }
-        }
-    }
 }

@@ -5,5 +5,7 @@ package com.example.sqhan.artwork.base;
  */
 
 public interface BasePresenter {
+    void start();
 
+    void end();
 }
