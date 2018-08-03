@@ -23,7 +23,8 @@ public class MainPresenter implements MainContract.IPresenter {
 
     @Override
     public void changeText() {
-        mView.changeTextUI("改变之后的文本");
+//        mView.changeTextUI("改变之后的文本");
+        mView.changeTextUI("改变之后的最终文本");
     }
 
     @Override
