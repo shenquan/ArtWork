@@ -23,7 +23,7 @@ def buildTime() {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.example.sqhan.artwork"

@@ -1,10 +1,14 @@
 package com.example.sqhan.artwork.service;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.example.sqhan.artwork.activity.BindServiceActivity;
 
 /**
  * 直接启动service
@@ -35,6 +39,21 @@ public class SimpleService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("onStartCommand invoke");
         Log.e(TAG, "onStartCommand invoke");
+        Intent myIntent = new Intent(this, BindServiceActivity.class);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//        Context context1 = getBaseContext();
+//        Context context2 = SimpleService.this;
+        PendingIntent pendingIntent = PendingIntent.getActivities(getApplicationContext(), 0, new Intent[]{myIntent}, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        new Handler().postDelayed(() -> {
+            try {
+                pendingIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                e.printStackTrace();
+            }
+//                startActivity(myIntent);
+        }, 2000);
         return super.onStartCommand(intent, flags, startId);
     }
 
