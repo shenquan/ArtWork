@@ -1,4 +1,4 @@
-package com.example.sqhan.artwork.staticmethodinference;
+package com.example.sqhan.artwork.methodreference.staticmethodinference;
 
 /**
  * Created by hanshenquan.

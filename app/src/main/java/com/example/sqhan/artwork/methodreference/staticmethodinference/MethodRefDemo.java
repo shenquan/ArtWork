@@ -1,7 +1,8 @@
-package com.example.sqhan.artwork.staticmethodinference;
+package com.example.sqhan.artwork.methodreference.staticmethodinference;
 
 /**
  * Created by hanshenquan.
+ * 静态方法引用
  */
 public class MethodRefDemo {
     public static String stringOp(StringFunc sf, String s) {
@@ -12,14 +13,14 @@ public class MethodRefDemo {
         String inStr = "lambda add power to Java";
         /**MyStringOps::strReverse 相当于实现了接口方法func()，
          并在接口方法func()中作了MyStringOps.strReverse()操作*/
-//        String outStr = stringOp(MyStringOps::strReverse, inStr);
+        String outStr = stringOp(MyStringOps::strReverse, inStr);
         //相当于
-        String outStr = stringOp(new StringFunc() {
+        /*String outStr = stringOp(new StringFunc() {
             @Override
             public String func(String n) {
                 return MyStringOps.strReverse(n);
             }
-        }, inStr);
+        }, inStr);*/
         System.out.println("Original string: " + inStr);
         System.out.println("String reserved: " + outStr);
     }

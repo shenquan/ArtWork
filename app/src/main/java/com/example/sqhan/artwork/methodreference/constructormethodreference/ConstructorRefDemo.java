@@ -1,7 +1,8 @@
-package com.example.sqhan.artwork.constructormethodreference;
+package com.example.sqhan.artwork.methodreference.constructormethodreference;
 
 /**
  * Created by hanshenquan.
+ * 构造方法引用
  */
 public class ConstructorRefDemo {
     public static void main(String[] args) {

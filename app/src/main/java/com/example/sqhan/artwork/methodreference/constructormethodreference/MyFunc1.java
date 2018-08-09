@@ -1,4 +1,4 @@
-package com.example.sqhan.artwork.constructormethodreference;
+package com.example.sqhan.artwork.methodreference.constructormethodreference;
 
 /**
  * Created by hanshenquan.
