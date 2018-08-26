@@ -63,6 +63,8 @@ public class MainActivity extends BaseActivity implements MainContract.IView {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         new MainPresenter(this);
+        // 或者
+//        setPresenter(new MainPresenter(this));
 
 //        mainOpenAPage.setText(null);//不会crash，因为源码里面判空了，若为null，则改为""。
     }
