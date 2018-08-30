@@ -19,7 +19,15 @@ public class TestClass {
 
         }
 
-        System.out.println(validator("方法41040319900223575x额"));
+        String str = "方法41040319900223575x额";
+        System.out.println(validator(str));
+        //需要捕获异常
+        try {
+            System.out.println(str.substring(0, 6));
+            System.out.println(str.substring(str.length() - 6, str.length()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
