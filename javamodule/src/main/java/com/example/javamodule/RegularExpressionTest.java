@@ -1,24 +1,13 @@
 package com.example.javamodule;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TestClass {
-    public static void main(String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        if (!list.isEmpty()) {
-            System.out.print("Hello World" + list.get(0));
-        }
-
-        try {
-            exceptionTest(-1);
-        } catch (NumberFormatException e) {
-//            e.printStackTrace();
-            System.out.println("出现了异常");
-
-        }
-
+/**
+ * Created by hanshenquan.
+ */
+public class RegularExpressionTest {
+    public static void main(String[]args){
         String str = "方法41040319900223575x额";
         System.out.println(validator(str));
         //需要捕获异常
@@ -28,15 +17,7 @@ public class TestClass {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // 泛型测试类
-        StrClass<Integer> strClass = new StrClass<>();
-        strClass.x1("x1");
-        System.out.println(strClass.x2());
-        int y = 3;
-        strClass.x3(y);
-
     }
-
     /**
      * 我国公民的身份证号码特点如下
      * 1.长度18位
@@ -64,35 +45,4 @@ public class TestClass {
         }
     }
 
-    private static void exceptionTest(int x) throws NumberFormatException {
-        if (x < 0) {
-            throw new NumberFormatException();
-        } else {
-            System.out.println("正常");
-        }
-    }
-
-    public interface test<T> {
-        void x1(T x);
-
-        T x2();
-    }
-
-    // 必须为static，否则不能再static方法中调用
-    private static class StrClass<P extends Integer> implements test<String> {
-
-        @Override
-        public void x1(String x) {
-            System.out.println("x1=" + x);
-        }
-
-        @Override
-        public String x2() {
-            return "x2";
-        }
-
-        void x3(P p) {
-            System.out.println("x3+" + p);
-        }
-    }
 }
