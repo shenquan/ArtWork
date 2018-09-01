@@ -28,6 +28,13 @@ public class TestClass {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // 泛型测试类
+        StrClass<Integer> strClass = new StrClass<>();
+        strClass.x1("x1");
+        System.out.println(strClass.x2());
+        int y = 3;
+        strClass.x3(y);
+
     }
 
     /**
@@ -62,6 +69,30 @@ public class TestClass {
             throw new NumberFormatException();
         } else {
             System.out.println("正常");
+        }
+    }
+
+    public interface test<T> {
+        void x1(T x);
+
+        T x2();
+    }
+
+    // 必须为static，否则不能再static方法中调用
+    private static class StrClass<P extends Integer> implements test<String> {
+
+        @Override
+        public void x1(String x) {
+            System.out.println("x1=" + x);
+        }
+
+        @Override
+        public String x2() {
+            return "x2";
+        }
+
+        void x3(P p) {
+            System.out.println("x3+" + p);
         }
     }
 }
