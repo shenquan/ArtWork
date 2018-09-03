@@ -32,7 +32,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -231,7 +230,26 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
      * 自己测试代码
      */
     private void rxjavaText3() {
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<String>() {
+//        Disposable disposable = Observable.create(new ObservableOnSubscribe<String>() {
+//            @Override
+//            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+//                emitter.onNext("1");
+//                emitter.onNext("2");
+//                emitter.onNext("3");
+////                emitter.onComplete();
+//            }
+//        })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<String>() {
+//                    @Override
+//                    public void accept(String s) throws Exception {
+//                        Log.e(TAG, s);
+//                    }
+//                });
+
+        // 或者
+        Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 emitter.onNext("1");
@@ -242,15 +260,99 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
+                .subscribe(new Observer<String>() {
                     @Override
-                    public void accept(String s) throws Exception {
-                        Log.e(TAG, s);
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
+
         mCompositeDisposable.add(disposable);
 
     }
+
+    /**
+     * 云霄的代码参考
+     *
+     */
+    //Disposable disposable = Observable.just(resultBitmap)
+    //                .map(bitmap -> {
+    //                    if (Macro.IS_DEBUG) {
+    //                        OcrHelper.saveTempImageData(OcrMaskActivity.this, OcrHelper.bitmap2Bytes(bitmap));
+    //                    }
+    //                    Bitmap fixBitmap = OcrHelper.constraintLength(bitmap);
+    //                    return OcrHelper.encodeImage(OcrMaskActivity.this, fixBitmap);
+    //                })
+    //                .doOnNext(encodeImageData -> {
+    //                    NetworkStateReceiver.requestNetworkStateDirectly();
+    //                    if (!NetworkStateUtils.isNetworkConnected()) {
+    //                        throw new OcrException(getString(R.string.ocr_no_internet_error));
+    //                    }
+    //                    if (TextUtils.isEmpty(encodeImageData)) {
+    //                        throw new OcrException(getString(R.string.ocr_image_encode_error));
+    //                    }
+    //                })
+    //                .flatMap(encodeImageData -> {
+    //                    if (OcrHelper.sOcrType == OcrHelper.OCR_NORMAL_TYPE) {
+    //                        return APIWrapper.ocr(encodeImageData);
+    //                    } else {
+    //                        return APIWrapper.ocrCertificate(encodeImageData, OcrHelper.sOcrType);
+    //                    }
+    //                })
+    //                .map(response -> {
+    //                    //文字扫描
+    //                    if (OcrHelper.sOcrType == OcrHelper.OCR_NORMAL_TYPE && response instanceof OcrResultBean) {
+    //                        OcrResultBean resultBean = (OcrResultBean) response;
+    //                        StringBuilder sb = new StringBuilder();
+    //                        List<OcrResultBean.WordsResultBean> wordsResult = resultBean.getWordsResult();
+    //                        for (OcrResultBean.WordsResultBean bean : wordsResult) {
+    //                            sb.append(bean.getWords()).append("\n");
+    //                        }
+    //                        if (TextUtils.isEmpty(sb)) {
+    //                            throw new OcrException(getString(R.string.ocr_no_result_error));
+    //                        }
+    //                        return sb.toString();
+    //                    }
+    //                    //表格或者证件扫描
+    //                    if (response instanceof BaseBean<?>) {
+    //                        BaseBean<JsonObject> resultBean = (BaseBean<JsonObject>) response;
+    //                        if (OcrHelper.sOcrType == OcrHelper.OCR_TYPE_CHART) {
+    //                            //表格
+    //                            if (!resultBean.data.get("form_content_status").getAsBoolean()) {
+    //                                throw new OcrException(getString(R.string.ocr_error));
+    //                            }
+    //                            return OcrHelper.writeExcel(OcrMaskActivity.this,
+    //                                    resultBean.data.get("form_content").toString());
+    //                        } else {
+    //                            //证件
+    //                            if (resultBean.error != 0 || resultBean.data == null
+    //                                    || resultBean.data.get("error_code") != null) {
+    //                                throw new OcrException(getString(R.string.ocr_error));
+    //                            }
+    //                            return resultBean.data.toString();
+    //                        }
+    //                    }
+    //                    return "";
+    //                })
+    //                .subscribeOn(Schedulers.io())
+    //                .observeOn(AndroidSchedulers.mainThread())
+    //                .subscribe(this::handleMaskSuccess, this::handleMaskFail);
+    //        mCompositeDisposable.add(disposable);
 
 }
 
