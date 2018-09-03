@@ -136,14 +136,15 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     private void rxjavaTest1() {
         // RxJava的流式操作
         // 1. 创建被观察者 & 生产事件
+        // todo 直接Observable.create出现黄色警告，原因是若subscribe中的参数为consumer，则返回的是Disposable，需要赋值
+        // 若是new Observer，则不用重新赋值，不会报黄色警告
         Observable.create((ObservableOnSubscribe<Integer>) emitter -> {
             Log.e(TAG, " 被观察者 Observable的工作线程是: " + Thread.currentThread().getName());
             emitter.onNext(1);
             emitter.onNext(2);
             emitter.onNext(3);
             emitter.onComplete();
-        })
-                .subscribeOn(Schedulers.io())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 //                .doOnSubscribe(disposable -> Log.e(TAG, " doOnSubscribe()的工作线程是: " + Thread.currentThread().getName()))
 //                .subscribeOn(Schedulers.io()) //doOnSubscribe()在其后的subscribeOn()指定的线程执行
@@ -268,7 +269,7 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 
                     @Override
                     public void onNext(String s) {
-
+                        Log.e(TAG, s);
                     }
 
                     @Override
@@ -281,8 +282,6 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 
                     }
                 });
-
-        mCompositeDisposable.add(disposable);
 
     }
 
@@ -426,3 +425,4 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 //
 //            }
 //        };
+
