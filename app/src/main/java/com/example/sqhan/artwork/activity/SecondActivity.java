@@ -26,10 +26,13 @@ import org.greenrobot.eventbus.ThreadMode;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -49,8 +52,10 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     Apple apple;
     @Inject
     Fruit fruit;
+    // 不用上面的，直接用这个即可
+    // 用于页面销毁时是确保取消订阅
+    CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private TextView tv_2;
-
     private Disposable disposable;
 
     @Override
@@ -69,8 +74,10 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 //        Log.e(TAG, "Fruit中Apple的属性name=" + fruit.apple.name);
         // 测试onSubscribe执行再什么线程
 //        new Thread(this::rxjavaTest1).start();
-        rxjavaTest1();
-        rxjavaText2();
+
+//        rxjavaTest1();
+//        rxjavaText2();
+        rxjavaText3();
 
     }
 
@@ -117,6 +124,9 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         if (disposable != null) {
             disposable.dispose();
         }
+
+        //不用上面的，直接用这个解除订阅即可
+        mCompositeDisposable.clear();
     }
 
     /**
@@ -133,22 +143,27 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
             emitter.onNext(2);
             emitter.onNext(3);
             emitter.onComplete();
-        }).subscribeOn(Schedulers.io())
+        })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSubscribe(disposable -> Log.e(TAG, " doOnSubscribe()的工作线程是: " + Thread.currentThread().getName()))
+//                .subscribeOn(Schedulers.io()) //doOnSubscribe()在其后的subscribeOn()指定的线程执行
                 .subscribe(new Observer<Integer>() {
                     // 2. 通过通过订阅（subscribe）连接观察者和被观察者
                     // 3. 创建观察者 & 定义响应事件的行为
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable = d;
-                        // 如果没有主动切换线程，则其实在rxjavaTest1()函数所在的线程中执行
+                        // 默认最先调用复写的 onSubscribe（），若则其实在rxjavaTest1()函数在UI线程，则在这里可以提前更新UI
+                        // 测试结论：如果没有主动切换线程，则其实在rxjavaTest1()函数所在的线程中执行，
+                        // 没必要用doOnSubscribe()函数
                         Log.e(TAG, " 观察者 Observer的工作线程是: " + Thread.currentThread().getName());
                         Log.e(TAG, "开始采用subscribe连接");
                     }
-                    // 默认最先调用复写的 onSubscribe（）
 
                     @Override
                     public void onNext(Integer value) {
+                        Log.e(TAG, " onNext的工作线程是: " + Thread.currentThread().getName());
                         Log.e(TAG, "对Next事件" + value + "作出响应");
                     }
 
@@ -163,15 +178,149 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
                     }
 
                 });
+
     }
 
     /**
      * 自己写的rxjava测试例子
      */
     private void rxjavaText2() {
-//        Observable.
+        Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                emitter.onNext("A");
+                emitter.onNext("B");
+                emitter.onNext("C");
+                emitter.onComplete();
+            }
+        });
+
+//        observable = Observable.just("A", "B", "C");
+        String[] words = {"A", "B", "C"};
+//        observable = Observable.fromArray(words);
+        Observer<String> observer = new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                disposable = d;
+            }
+
+            @Override
+            public void onNext(String s) {
+                Log.e(TAG, s);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.e(TAG, "onComplete()");
+            }
+        };
+        observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+
 
     }
 
+    /**
+     * 自己测试代码
+     */
+    private void rxjavaText3() {
+        Disposable disposable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                emitter.onNext("1");
+                emitter.onNext("2");
+                emitter.onNext("3");
+//                emitter.onComplete();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.e(TAG, s);
+                    }
+                });
+        mCompositeDisposable.add(disposable);
+
+    }
 
 }
+
+//rxjava 1.x版本的
+       /* Action1<String> onNextAction = new Action1<String>() {
+            @Override
+            public void call(String s) {
+
+            }
+        };
+        Action1<Throwable> onErrorAction = new Action1<Throwable>() {
+            // onError()
+            @Override
+            public void call(Throwable throwable) {
+                // Error handling
+            }
+        };
+        Action0 onCompletedAction = new Action0() {
+            // onCompleted()
+            @Override
+            public void call() {
+                Log.e(TAG, "completed");
+            }
+        };
+
+        // 自动创建 Subscriber ，并使用 onNextAction 来定义 onNext()
+        observable.subscribe(onNextAction);
+// 自动创建 Subscriber ，并使用 onNextAction 和 onErrorAction 来定义 onNext() 和 onError()
+        observable.subscribe(onNextAction, onErrorAction);
+// 自动创建 Subscriber ，并使用 onNextAction、 onErrorAction 和 onCompletedAction 来定义 onNext()、 onError() 和 onCompleted()
+        observable.subscribe(onNextAction, onErrorAction, onCompletedAction);
+*/
+/**
+ * 而与 Subscriber.onStart() 相对应的，有一个方法 Observable.doOnSubscribe() 。
+ * 它和 Subscriber.onStart() 同样是在 subscribe() 调用后而且在事件发送前执行，但区别在于它可以指定线程。
+ * 默认情况下， doOnSubscribe() 执行在 subscribe() 发生的线程；
+ * 而如果在 doOnSubscribe() 之后有 subscribeOn() 的话，它将执行在离它最近的 subscribeOn() 所指定的线程。
+ */
+//        Observable.create()
+//                .subscribeOn(Schedulers.io())
+//                .doOnSubscribe(new Action0() {
+//                    @Override
+//                    public void call() {
+//                        progressBar.setVisibility(View.VISIBLE); // 需要在主线程执行
+//                    }
+//                })
+//                .subscribeOn(AndroidSchedulers.mainThread()) // 指定主线程
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(subscriber);
+
+
+// rxjava 2版本之后已经没了Subscriber,也没有onStart了
+//        Subscriber<String> subscriber = new Subscriber<String>() {
+//            @Override
+//            public void onSubscribe(Subscription s) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable t) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        };
