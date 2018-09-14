@@ -1,9 +1,15 @@
 package com.example.sqhan.artwork.activity;
 
+import android.animation.ObjectAnimator;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.PaintCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sqhan.artwork.R;
@@ -54,8 +60,10 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     // 不用上面的，直接用这个即可
     // 用于页面销毁时是确保取消订阅
     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private TextView tv_1;
     private TextView tv_2;
     private Disposable disposable;
+    private LinearLayout ll;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,15 +84,56 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 
 //        rxjavaTest1();
 //        rxjavaText2();
-        rxjavaText3();
+//        rxjavaText3();
 
+//        int unicode1 = 0x1F1F8;
+        int unicode1 = 0x1F601;
+        //下面这两个组合在一起
+//        int unicode2 = 0x1F1E8;
+//        int unicode3 = 0x1F1F3;
+        int unicode2 = 0x0034;
+        int unicode3 = 0x20E3;
+        String str1 = getEmojiByUnicode(unicode1);
+        String str2 = getEmojiByUnicode(unicode2);
+        String str3 = getEmojiByUnicode(unicode3);
+        tv_1.setText(str1);
+//        tv_2.setText(str2+str3);
+        String str4 = getEmojiByUnicode(0x260e);
+        tv_2.setText(str4);
+//        tv_2.setText("😀\uD83D\uDE00");
+
+        //此处的hasGlyph()还是不能判断比如0x360e，显示成头像，
+        if (PaintCompat.hasGlyph(new Paint(), str4)) {
+            Log.e(TAG, "true");
+        } else {
+            Log.e(TAG, "false");
+        }
+
+        View inflateView = LayoutInflater.from(this).inflate(R.layout.inflate_layout, null);
+        ll.addView(inflateView);
+
+        tv_2.setOnClickListener(v -> {
+            //值是像素
+            ObjectAnimator animator = ObjectAnimator.ofFloat(inflateView, "translationY", -270f, 0);
+            animator.setInterpolator(new DecelerateInterpolator());
+            animator.setDuration(650);
+            animator.start();
+        });
+
+
+    }
+
+    public String getEmojiByUnicode(int unicode) {
+        return new String(Character.toChars(unicode));
     }
 
     @Override
     protected void initView() {
         super.initView();
         setContentView(R.layout.second_activity_layout);
-        tv_2 = (TextView) findViewById(R.id.tv_2);
+        tv_1 = findViewById(R.id.tv_1);
+        tv_2 = findViewById(R.id.tv_2);
+        ll = findViewById(R.id.ll);
 
     }
 
