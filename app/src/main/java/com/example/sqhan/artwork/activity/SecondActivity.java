@@ -1,8 +1,10 @@
 package com.example.sqhan.artwork.activity;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.PaintCompat;
 import android.util.Log;
@@ -114,6 +116,10 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         View inflateView = LayoutInflater.from(this).inflate(R.layout.inflate_layout, null);
         ll.addView(inflateView);
 
+        TextView textView = new TextView(mContext);
+        textView.setText("测试默认字体颜色");
+        ll.addView(textView);
+
         tv_2.setOnClickListener(v -> {
             //值是像素
             ObjectAnimator animator = ObjectAnimator.ofFloat(inflateView, "translationY", -270f, 0);
@@ -129,10 +135,16 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         //反向播放
 //        animationView.setRepeatMode(LottieDrawable.REVERSE);
         animationView.playAnimation();
-        // 这个要放在playAnimation后面。但是在这里控制还会出现问题：有时候是从头开始播放，所以放在了addAnimatorUpdateListener中
+        // 这个要放在playAnimation后面。
+        但是在这里控制还会出现问题：有时候是从头开始播放，所以放在了addAnimatorUpdateListener中
 //        if (animationView.isAnimating()) {
 //            animationView.setProgress(0.3f);
 //        }
+
+        // 重要，最终解决方案：使用
+        animationView.setMinProgress(0.3f);
+        animationView.setMaxProgress(0.85f);
+
         animationView.addAnimatorListener(new Animator.AnimatorListener() {
             // 测试结果：animationView.getDuration()放在监听器的任何一个方法内，获取的都是动画的全部长度
             @Override
@@ -176,18 +188,18 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         /**
          * 单次播放，从0.3f-0.84f截取的消息提醒内容(我这个是关于备忘录的示例)
          */
-        animationView.playAnimation();
-        animationView.addAnimatorUpdateListener(animation -> {
-            float progress = animation.getAnimatedFraction();
-            // 只设置下面这行，虽然没有设置循环播放，但会变成循环播放
-            if (progress < 0.3 || progress > 0.85) {
-                animationView.setProgress(0.3f);
-            }
-            // 加上这行，就变为了单次播放
-            if (progress > 0.85f) {
-                animationView.cancelAnimation();
-            }
-        });
+//        animationView.playAnimation();
+//        animationView.addAnimatorUpdateListener(animation -> {
+//            float progress = animation.getAnimatedFraction();
+//            // 只设置下面这行，虽然没有设置循环播放，但会变成循环播放
+//            if (progress < 0.3 || progress > 0.85) {
+//                animationView.setProgress(0.3f);
+//            }
+//            // 加上这行，就变为了单次播放
+//            if (progress > 0.85f) {
+//                animationView.cancelAnimation();
+//            }
+//        });
 
         /**
          * 无限播放的动画，从0.3f-0.84f截取的消息提醒内容
@@ -201,6 +213,55 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
                 animationView.setProgress(0.3f);
             }
         });*/
+
+        delaySinglePlay();
+
+    }
+
+    /**
+     * 延迟play，
+     */
+    private void delaySinglePlay() {
+        new Handler().postDelayed(this::singlePlay, 3000);
+    }
+
+    private void singlePlay() {
+        animationView.playAnimation();
+        animationView.setMinProgress(0.3f);
+        animationView.setMaxProgress(0.85f);
+//        animationView.addAnimatorUpdateListener(animation -> {
+//            float progress = animation.getAnimatedFraction();
+//            // 只设置下面这行，虽然没有设置循环播放，但会变成循环播放
+//            if (progress < 0.3 || progress > 0.85) {
+//                animationView.setProgress(0.3f);
+//            }
+//            // 加上这行，就变为了单次播放
+//            if (progress > 0.85f) {
+//                animationView.cancelAnimation();
+//            }
+//        });
+        animationView.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                delaySinglePlay();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
 
     }
 
