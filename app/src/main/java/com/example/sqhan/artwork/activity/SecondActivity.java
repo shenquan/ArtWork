@@ -129,8 +129,10 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         //反向播放
 //        animationView.setRepeatMode(LottieDrawable.REVERSE);
         animationView.playAnimation();
-        // 这个要放在playAnimation后面
-        animationView.setProgress(0.3f);
+        // 这个要放在playAnimation后面。但是在这里控制还会出现问题：有时候是从头开始播放，所以放在了addAnimatorUpdateListener中
+//        if (animationView.isAnimating()) {
+//            animationView.setProgress(0.3f);
+//        }
         animationView.addAnimatorListener(new Animator.AnimatorListener() {
             // 测试结果：animationView.getDuration()放在监听器的任何一个方法内，获取的都是动画的全部长度
             @Override
@@ -175,16 +177,30 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
          * 单次播放，从0.3f-0.84f截取的消息提醒内容(我这个是关于备忘录的示例)
          */
         animationView.playAnimation();
-        if (animationView.isAnimating()) {
-            animationView.setProgress(0.3f);
-        }
         animationView.addAnimatorUpdateListener(animation -> {
-            if (animation.getAnimatedFraction() > 0.85) {
+            float progress = animation.getAnimatedFraction();
+            // 只设置下面这行，虽然没有设置循环播放，但会变成循环播放
+            if (progress < 0.3 || progress > 0.85) {
                 animationView.setProgress(0.3f);
+            }
+            // 加上这行，就变为了单次播放
+            if (progress > 0.85f) {
                 animationView.cancelAnimation();
             }
         });
 
+        /**
+         * 无限播放的动画，从0.3f-0.84f截取的消息提醒内容
+         */
+        /*animationView.setRepeatCount(LottieDrawable.INFINITE);
+        animationView.playAnimation();
+
+        animationView.addAnimatorUpdateListener(animation -> {
+            float progress = animation.getAnimatedFraction();
+            if (progress < 0.3 || progress > 0.85) {
+                animationView.setProgress(0.3f);
+            }
+        });*/
 
     }
 
