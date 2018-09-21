@@ -12,6 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.sqhan.artwork.R;
 import com.example.sqhan.artwork.base.BaseActivity;
 import com.example.sqhan.artwork.di.component.DaggerFruitComponent;
@@ -64,6 +65,7 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     private TextView tv_2;
     private Disposable disposable;
     private LinearLayout ll;
+    private LottieAnimationView animationView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,9 +106,9 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
 
         //此处的hasGlyph()还是不能判断比如0x360e，显示成头像，
         if (PaintCompat.hasGlyph(new Paint(), str4)) {
-            Log.e(TAG, "true");
+//            Log.e(TAG, "true");
         } else {
-            Log.e(TAG, "false");
+//            Log.e(TAG, "false");
         }
 
         View inflateView = LayoutInflater.from(this).inflate(R.layout.inflate_layout, null);
@@ -118,6 +120,69 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
             animator.setInterpolator(new DecelerateInterpolator());
             animator.setDuration(650);
             animator.start();
+        });
+
+        /**
+         * 无限播放的动画，从0.3f-0.84f截取的消息提醒内容
+         */
+        /*animationView.setRepeatCount(LottieDrawable.INFINITE);
+        //反向播放
+//        animationView.setRepeatMode(LottieDrawable.REVERSE);
+        animationView.playAnimation();
+        // 这个要放在playAnimation后面
+        animationView.setProgress(0.3f);
+        animationView.addAnimatorListener(new Animator.AnimatorListener() {
+            // 测试结果：animationView.getDuration()放在监听器的任何一个方法内，获取的都是动画的全部长度
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.e(TAG, "动画Start");
+//                Log.e(TAG, "动画时长" + String.valueOf(animationView.getDuration()));
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.e(TAG, "动画End");
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                Log.e(TAG, "动画Cancel");
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                Log.e(TAG, "动画Repeat");
+            }
+        });
+//我写的例子，运行animationView.pauseAniamtion()与cancleAnimation()的效果是一样，运行完cacleAnimation()之后，
+// 再运行playAnimation()动画不是从头开始，而是接着演示动画，查看源码，查看pauseAniamtion()与cancleAniamtion()
+// 的实现，差别只是pauseAnimation()方法多了一个setProgress(progress)而已，而cancleAnimation()没有
+// 将progress设置为0，所以显示是一样的。如果要解决，可以在使用cancleAniamtion()之前，
+// 加上animationView.setProgress(0)。
+        animationView.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+//                这两个播放进度监听基本是一样的，除非反转播放时时放过来的。
+//                Log.e(TAG, "播放进度更新监听：" + animation.getAnimatedFraction());
+//                Log.e(TAG, "animationView.getProgress()=" + animationView.getProgress());
+                if(animationView.getProgress()>0.84){
+                    animationView.setProgress(0.3f);
+                }
+            }
+        });*/
+
+        /**
+         * 单次播放，从0.3f-0.84f截取的消息提醒内容(我这个是关于备忘录的示例)
+         */
+        animationView.playAnimation();
+        if (animationView.isAnimating()) {
+            animationView.setProgress(0.3f);
+        }
+        animationView.addAnimatorUpdateListener(animation -> {
+            if (animation.getAnimatedFraction() > 0.85) {
+                animationView.setProgress(0.3f);
+                animationView.cancelAnimation();
+            }
         });
 
 
@@ -134,6 +199,7 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
         tv_1 = findViewById(R.id.tv_1);
         tv_2 = findViewById(R.id.tv_2);
         ll = findViewById(R.id.ll);
+        animationView = findViewById(R.id.animation_view);
 
     }
 
