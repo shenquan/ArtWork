@@ -27,6 +27,7 @@ import com.example.sqhan.artwork.di.module.AppleModule;
 import com.example.sqhan.artwork.model.events.ChangeMainActivityTextEvent;
 import com.example.sqhan.artwork.model.events.ChangeSecondActivityTextEvent;
 import com.example.sqhan.artwork.utils.AndroidUtil;
+import com.tencent.mmkv.MMKV;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -72,6 +73,31 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String rootDir = MMKV.initialize(this); // /data/user/0/com.example.sqhan.artwork/files/mmkv
+        Log.e(TAG, "MMKV存储路径为" + rootDir);
+
+        MMKV kv = MMKV.defaultMMKV();
+
+        kv.encode("bool", true);
+        boolean bValue = kv.decodeBool("bool");
+
+        kv.encode("int", Integer.MIN_VALUE);
+        int iValue = kv.decodeInt("int");
+
+        kv.encode("string", "Hello from mmkv");
+        String str = kv.decodeString("string");
+
+        kv.encode("x1",100);
+        String x1 = kv.decodeString("x1"); // ""
+        int i1 = kv.decodeInt("x1"); // 100
+
+        String x2 = kv.decodeString("x2"); // null
+
+        kv.encode("double",1.0d);
+        double x3 = kv.decodeDouble("double");
+
+
         EventBus.getDefault().register(this);
         //方式一:用create的方式，其返回的是new Builder().build(); 我故意命名为injectXXX，其实一般用inject即可。
 //        DaggerSecondActivityComponent.create().injectXXX(this);

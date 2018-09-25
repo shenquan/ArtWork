@@ -142,6 +142,7 @@ dependencies {
 
     //lottie
     implementation 'com.airbnb.android:lottie:2.6.1'
+    implementation 'com.tencent:mmkv:1.0.10'
 
 }
 
