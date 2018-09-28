@@ -34,6 +34,11 @@ public class GenericsAndListTest {
         String a2 = fun1(a1);
         System.out.println(a2);
 
+        // 获取文件后缀名
+        String fileName = "x11.mp4";
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        System.out.println(suffix);
+
     }
 
     private static void exceptionTest(int x) throws NumberFormatException {
