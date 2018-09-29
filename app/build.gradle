@@ -114,7 +114,7 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.3.1'
     implementation 'com.android.support:multidex:1.0.3'
     // rxbus使用的是rxjava 1.3.0，应该还不如用eventbus
-//    implementation 'com.hwangjr.rxbus:rxbus:1.0.6'
+    implementation 'com.hwangjr.rxbus:rxbus:1.0.6'
     // 多dex配置
     //tinker热修复
     implementation 'com.tencent.bugly:crashreport_upgrade:1.3.5'
