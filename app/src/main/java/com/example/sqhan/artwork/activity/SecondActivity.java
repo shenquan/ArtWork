@@ -1,6 +1,7 @@
 package com.example.sqhan.artwork.activity;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.example.sqhan.artwork.R;
 import com.example.sqhan.artwork.base.BaseActivity;
 import com.example.sqhan.artwork.di.component.DaggerFruitComponent;
@@ -250,6 +252,8 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     private void delaySinglePlay() {
         new Handler().postDelayed(this::singlePlay, 3000);
     }
+
+
 
     private void singlePlay() {
         animationView.playAnimation();
@@ -570,6 +574,124 @@ public class SecondActivity extends BaseActivity implements View.OnClickListener
     //                .observeOn(AndroidSchedulers.mainThread())
     //                .subscribe(this::handleMaskSuccess, this::handleMaskFail);
     //        mCompositeDisposable.add(disposable);
+
+    /**
+     * 助手面板小机器人lottie动画管理类
+     */
+//    public class AssistantRobotAnimManager {
+////        Action1为rxbus引入的rxjava 1.3.0版本
+//
+//        private static final String ANIM_FILE_NAME = "color_box.json";
+//
+//        /**
+//         * 初始化要播放动画的 view
+//         *
+//         * @param view 目标 view
+//         */
+//        public void initView(LottieAnimationView view) {
+//            view.setAnimation(ANIM_FILE_NAME);
+//        }
+//
+//        /**
+//         * 上升动画
+//         *
+//         * @param animationView  目标 view
+//         * @param callbackAimEnd 结束回调
+//         */
+//        public void playRise(LottieAnimationView animationView, Action1<Boolean> callbackAimEnd) {
+//            animationView.setSpeed(1);
+//            animationView.setRepeatCount(0);
+//            animationView.setMinAndMaxProgress(0f, 0.11f);
+//            animationView.addAnimatorListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    animationView.removeAllAnimatorListeners();
+//                    if (null != callbackAimEnd) {
+//                        Observable.just(true).subscribe(callbackAimEnd);
+//                    }
+//                }
+//            });
+//            animationView.playAnimation();
+//        }
+//
+//        /**
+//         * 下沉动画
+//         *
+//         * @param animationView  目标 view
+//         * @param callbackAimEnd 结束回调
+//         */
+//        public void playDown(LottieAnimationView animationView, Action1<Boolean> callbackAimEnd) {
+//            animationView.setSpeed(1);
+//            animationView.setRepeatCount(0);
+//            animationView.setMinAndMaxProgress(0.876f, 1f);
+//            animationView.addAnimatorListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    animationView.removeAllAnimatorListeners();
+//                    if (callbackAimEnd != null) {
+//                        Observable.just(true).subscribe(callbackAimEnd);
+//                    }
+//                }
+//            });
+//            animationView.playAnimation();
+//        }
+//
+//        /**
+//         * 没听清动画
+//         *
+//         * @param animationView  目标 view
+//         * @param callbackAimEnd 结束回调
+//         */
+//        public void playError(LottieAnimationView animationView, Action1<Boolean> callbackAimEnd) {
+//            animationView.setRepeatCount(0);
+//            animationView.setMinAndMaxProgress(0.62f, 0.696f);
+//            animationView.addAnimatorListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    animationView.removeAllAnimatorListeners();
+//                    if (callbackAimEnd != null) {
+//                        Observable.just(true).subscribe(callbackAimEnd);
+//                    }
+//                }
+//            });
+//            animationView.playAnimation();
+//        }
+//
+//        /**
+//         * 倾听中动画
+//         *
+//         * @param animationView 目标 view
+//         */
+//        public void playListening(LottieAnimationView animationView) {
+//            animationView.setRepeatCount(LottieDrawable.INFINITE);
+//            animationView.setMinAndMaxProgress(0.37f, 0.52f);
+//            animationView.setRepeatMode(LottieDrawable.REVERSE);
+//            animationView.addAnimatorListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationRepeat(Animator animation) {
+//                    animationView.removeAllAnimatorListeners();
+//                }
+//
+//                @Override
+//                public void onAnimationCancel(Animator animation) {
+//                    super.onAnimationCancel(animation);
+//                }
+//            });
+//            animationView.playAnimation();
+//        }
+//
+//        /**
+//         * 闲置状态动画
+//         *
+//         * @param animationView 目标 view
+//         */
+//        public void playIdle(LottieAnimationView animationView) {
+//            animationView.setRepeatCount(LottieDrawable.INFINITE);
+//            animationView.setRepeatMode(LottieDrawable.RESTART);
+//            animationView.setMinAndMaxProgress(0.11f, 0.27f);
+//            animationView.playAnimation();
+//        }
+//    }
 
 }
 
