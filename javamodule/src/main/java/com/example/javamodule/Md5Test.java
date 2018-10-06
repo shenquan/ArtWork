@@ -3,13 +3,11 @@ package com.example.javamodule;
 import java.security.MessageDigest;
 
 /**
- * Created by hanshenquan.
  * md5随便测试
  */
 public class Md5Test {
     public static void main(String[] args) {
-        String x = "话剧1";
-//        String x = "电子书1";
+        String x = "XX1";
         String result = md5(md5(x) + x);
         System.out.println(result);
         System.out.println(result.substring(0,10));
