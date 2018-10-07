@@ -10,10 +10,8 @@ public class Md5Test {
         String x = "XX1";
         String result = md5(md5(x) + x);
         System.out.println(result);
-        System.out.println(result.substring(0,10));
-
+        System.out.println(result.substring(0, 10));
     }
-
 
     public final static String md5(String s) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
